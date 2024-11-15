@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example</groupId>
+    <artifactId>demo5</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>demo5</name>
+    <description>demo5</description>
+    <url/>
+    <licenses>
+        <license/>
+    </licenses>
+    <developers>
+        <developer/>
+    </developers>
+    <scm>
+        <connection/>
+        <developerConnection/>
+        <tag/>
+        <url/>
+    </scm>
+    <properties>
+        <java.version>17</java.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.10</version>
+            <!-- <scope>test</scope>-->
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.141.59</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.28.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- maven默认跑的用例-->
+                    <includes>
+                        <include>  **/*Test.java ; **/Test*.java ; **/*TestCase.java</include>
+                    </includes>
+                    <suiteXmlFiles>
+                          <suiteXmlFile>${project.basedir}/src/main/resources/testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                    <parallel>methods</parallel>
+                    <threadCount>10</threadCount>
+                    <argLine>-Dfile.encoding=UTF-8</argLine>
+                    <!-- <skip>true</skip> -->
+                    <!-- <testFailureIgnore>true</testFailureIgnore> -->
+                </configuration>
+                <version>2.7.2</version>
+            </plugin>
+            <!-- ======================打包配置开始======================== -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+                <version>1.1.1</version>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>assemble</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- 配置文件的目标目录 -->
+                    <configurationDirectory>assembly</configurationDirectory>
+                    <!-- 从哪里拷贝配置文件 (默认src/main/config) -->
+                    <configurationSourceDirectory>assembly</configurationSourceDirectory>
+                    <!-- 拷贝配置文件到上面的目录中 -->
+                    <copyConfigurationDirectory>true</copyConfigurationDirectory>
+                    <includeConfigurationDirectoryInClasspath>true
+                    </includeConfigurationDirectoryInClasspath>
+                    <!-- lib目录中jar的存放规则，默认是${groupId}/${artifactId}的目录格式，flat表示直接把jar放到lib目录 -->
+                    <repositoryLayout>flat</repositoryLayout>
+                    <!-- 打包的jar，以及maven依赖的jar放到这个目录里面 -->
+                    <repositoryName>lib</repositoryName>
+                    <!-- 根目录 -->
+                    <!-- 打包后的exe文件放在 ：E:\p\testerpractice\target\testerpractice-0.0.1-SNAPSHOT\bin -->
+                    <assembleDirectory>
+                        ${project.build.directory}/${project.artifactId}-${project.version}
+                    </assembleDirectory>
+
+                    <binFileExtensions>
+                        <!--<unix>.sh</unix>-->
+                        <windows>.bat</windows>
+                    </binFileExtensions>
+                    <platforms>
+                        <!-- 生成window平台的执行脚本 -->
+                        <!--<platform>unix</platform>-->
+                        <platform>windows</platform>
+                    </platforms>
+
+                    <programs>
+                        <program>
+                            <mainClass>chapter5.TriangleMain</mainClass>
+                            <name>TriangleMain</name>
+                        </program>
+                    </programs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+            <!-- ======================打包配置结束======================== -->
+
+        </plugins>
+    </build>
+
+</project>
